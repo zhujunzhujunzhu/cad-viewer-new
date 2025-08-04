@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  display: flex;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+.canvas {
+  top: 0px;
+  height: calc(100vh - var(--ml-status-bar-height)); /* Adjusts for menu and status bar */
+  width: 100%;
+  display: block;
+  outline: none;
+}
+
+.el-dialog {
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.el-dialog__headerbtn {
+  height: 36px;
+  width: 36px;
+}

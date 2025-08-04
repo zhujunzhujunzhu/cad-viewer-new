@@ -1,0 +1,27 @@
+{
+  "name": "@mlightcad/svg-renderer",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "main": "./dist/svg-renderer.umd.cjs",
+  "module": "./dist/svg-renderer.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    "types": "./lib/index.d.ts",
+    "import": "./dist/svg-renderer.js",
+    "require": "./dist/svg-renderer.umd.cjs"
+  },
+  "scripts": {
+    "clean": "rimraf dist lib tsconfig.tsbuildinfo",
+    "build": "tsc && vite build",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix --quiet src/"
+  },
+  "peerDependencies": {
+    "@mlightcad/data-model": "1.1.1"
+  }
+}
