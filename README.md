@@ -1,25 +1,37 @@
-# MLightCAD
+# CAD-Viewer
 
-MLightCAD is an online CAD editor inspired by AutoCAD, aiming to provide a modern, web-based platform for viewing and editing DWG/DXF files. The project is modular, supporting both offline and online workflows, and is designed for integration with other applications.
+[**🌐 Live Demo**](https://mlight-lee.github.io/cad-viewer/)
+
+CAD-Viewer is a modern, web-based CAD editor inspired by AutoCAD. It enables users to view and edit DWG/DXF files directly in the browser, supporting both offline and online workflows. The project is modular and designed for seamless integration with other applications.
+
+![CAD-Viewer](./assets/dwg-viewer.jpg)
+
+## Features
+
+- View DWG/DXF files in the browser
+- Modular architecture for easy integration
+- Offline and online editing workflows
+- THREE.js 3D rendering engines
+- Designed for extensibility and integration with platforms like CMS, Notion, and WeChat
 
 ## Roadmap
 
 To achieve the final goal, the following milestones are defined:
 
 - **DWG/DXF Viewer**: Create an offline web viewer for DWG/DXF files.
-- **Integration**: Integrate the DWG/DXF viewer into other applications or frameworks (e.g., CMS, Notion, OpenLayers) to enable DWG/DXF file display.
+- **Integration**: Integrate the DWG/DXF viewer into other applications or frameworks (e.g., CMS, Notion, OpenLayers).
 - **WeChat App**: Develop a WeChat app to display DWG/DXF files within WeChat.
 - **Offline CAD Editor**: Build an offline CAD editor that allows users to modify DWG/DXF files in the browser and store changes locally.
 - **Online CAD Editor**: Add backend support to enable users to store changes to DXF/DWG files in the cloud.
 
 ## Architecture
 
-MLightCAD is organized into several subpackages, each responsible for a specific aspect of the system:
+CAD-Viewer is organized into several subpackages, each responsible for a specific aspect of the system:
 
-- **mlightcad**: The main application frontend, including UI components and state management.
-- **svg-renderer**: Renders DWG/DXF entities as SVG graphics for SVG exporting.
+- **mlightcad**: Main application frontend, including UI components and state management.
+- **svg-renderer**: Renders DWG/DXF entities as SVG graphics for exporting.
 - **three-renderer**: Uses THREE.js to render DWG/DXF entities as interactive 3D graphics.
-- **viewer**: Provides core document management, command handling, and integration logic for loading and interacting with CAD files.
+- **viewer**: Core document management, command handling, and integration logic for loading and interacting with CAD files.
 
 ## Subpackages
 
