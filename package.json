@@ -15,30 +15,28 @@
     "analyze": "nx run-many -t analyze",
     "build": "nx run-many -t build",
     "clean": "nx run-many -t clean",
-    "dev": "nx run @mlightcad/mlightcad:dev",
+    "dev": "nx run @mlightcad/cad-viewer-example:dev",
     "doc": "typedoc",
     "format": "prettier --config ./.prettierrc.js --write packages/**/*.{ts,js,vue,json}",
     "lint": "nx run-many -t lint",
     "lint:fix": "nx run-many -t lint:fix",
-    "preview": "nx run @mlightcad/mlightcad:preview",
+    "preview": "nx run @mlightcad/cad-viewer-example:preview",
     "test": "jest"
   },
   "engines": {
     "pnpm": ">=8"
   },
-  "private": true,
   "dependencies": {
-    "@mlightcad/common": "1.0.1",
-    "@mlightcad/data-model": "1.0.3",
-    "@mlightcad/geometry-engine": "1.0.1",
-    "@mlightcad/graphic-interface": "1.0.1",
-    "lodash-es": "4.17.21"
+    "@mlightcad/common": "1.1.0",
+    "@mlightcad/geometry-engine": "2.0.1",
+    "@mlightcad/graphic-interface": "2.0.1"
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^3.0.0",
     "@nx/js": "19.3.1",
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.5",
     "@types/node": "^20.14.9",
     "@typescript-eslint/parser": "^8.4.0",
     "@vitejs/plugin-legacy": "^5.4.2",

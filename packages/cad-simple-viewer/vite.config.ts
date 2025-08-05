@@ -6,9 +6,10 @@ export default defineConfig({
     outDir: 'dist',
     lib: {
       entry: 'src/index.ts',
-      name: 'svg-renderer',
+      name: 'cad-simple-viewer',
       fileName: 'index'
-    }
+    },
+    minify: true
   },
   plugins: [peerDepsExternal()]
 })
