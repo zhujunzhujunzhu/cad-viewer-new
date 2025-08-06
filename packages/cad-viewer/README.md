@@ -14,6 +14,17 @@ CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD
 - Dialogs, toolbars, and command line interface
 - Vue 3 component for embedding high-performance CAD viewers in your own apps
 
+## When Should You Choose cad-viewer?
+
+Use `cad-viewer` if you want a **ready-to-use Vue 3 component** for viewing and editing CAD files with a modern UI, dialogs, toolbars, and state management. This package is ideal if:
+
+- You want to quickly embed a high-performance CAD viewer/editor into your Vue application with minimal setup.
+- You need a solution that handles file loading, rendering, layer/entity management, and user interactions out of the box.
+- You want seamless integration with optimized SVG and THREE.js renderers, internationalization, and theming.
+- You do **not** want to build your own UI from scratch.
+
+**Recommended for:** Most web applications, dashboards, or platforms that need to display CAD files with a polished user interface.
+
 ## Browser-Only Architecture
 
 This Vue 3 component operates entirely in the browser with **no backend dependencies**. DWG/DXF files are parsed and processed locally using WebAssembly and JavaScript, providing:
@@ -44,6 +55,22 @@ npm install @mlightcad/cad-viewer
 Please refer to sub-package `cad-viewer-example` as one example.
 
 ### Basic Usage
+
+Firstly, add the following dependencies into your package.json.
+
+- @element-plus/icons-vue
+- @mlightcad/cad-simple-viewer
+- @mlightcad/cad-viewer
+- @mlightcad/data-model
+- @mlightcad/libredwg-converter
+- @mlightcad/libredwg-web
+- @vueuse/core
+- element-plus
+- lodash-es
+- vue
+- vue-i18n
+
+Then create one vue component as follows.
 
 ```vue
 <template>
@@ -192,21 +219,6 @@ Copy `libredwg-web.js` to folder `public/assets` and update `index.html` by addi
 - CSS and SCSS files for styling
 - Dark mode support
 - Element Plus integration
-
-## Dependencies
-
-This component library requires the following peer dependencies:
-
-- `vue` ^3.4.0
-- `@mlightcad/data-model`
-- `@mlightcad/libredwg-converter`
-- `@mlightcad/libredwg-web`
-- `@mlightcad/svg-renderer`
-- `@mlightcad/three-renderer`
-- `@mlightcad/cad-simple-viewer`
-- `element-plus`
-- `vue-i18n`
-- And others as specified in package.json
 
 ## Development
 
