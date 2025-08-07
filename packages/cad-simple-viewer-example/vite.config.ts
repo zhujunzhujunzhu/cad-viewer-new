@@ -4,6 +4,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig(({ command }: ConfigEnv) => {
   return {
+    base: './',
     server: {
       port: 3000
     },
@@ -25,14 +26,16 @@ export default defineConfig(({ command }: ConfigEnv) => {
       }
     },
     plugins: [
-      command === 'serve' ? viteStaticCopy({
-        targets: [
-          {
-            src: './node_modules/@mlightcad/libredwg-web/dist/libredwg-web.js',
-            dest: 'assets'
-          }
-        ]
-      }) : undefined
+      command === 'serve'
+        ? viteStaticCopy({
+            targets: [
+              {
+                src: './node_modules/@mlightcad/libredwg-web/dist/libredwg-web.js',
+                dest: 'assets'
+              }
+            ]
+          })
+        : undefined
     ]
   }
 })
