@@ -1,6 +1,7 @@
 import {
   AcDbEntity,
   acdbHostApplicationServices,
+  AcDbLayerTableRecord,
   AcDbLayout,
   AcDbObjectId,
   AcDbRasterImage,
@@ -420,6 +421,28 @@ export class AcTrView2d extends AcEdBaseView {
   /**
    * @inheritdoc
    */
+  addLayer(layer: AcDbLayerTableRecord) {
+    this._scene.addLayer({
+      name: layer.name,
+      isFrozen: layer.isFrozen,
+      isOff: layer.isOff
+    })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  updateLayer(layer: AcDbLayerTableRecord) {
+    this._scene.updateLayer({
+      name: layer.name,
+      isFrozen: layer.isFrozen,
+      isOff: layer.isOff
+    })
+  }
+
+  /**
+   * @inheritdoc
+   */
   addEntity(entity: AcDbEntity | AcDbEntity[]) {
     const entities = Array.isArray(entity) ? entity : [entity]
     setTimeout(async () => {
@@ -448,7 +471,7 @@ export class AcTrView2d extends AcEdBaseView {
 
     for (let i = 0; i < entities.length; ++i) {
       const entity = entities[i]
-      const threeEntity = entity.draw(this._renderer) as AcTrEntity
+      const threeEntity = entity.draw(this._renderer, true) as AcTrEntity
       if (threeEntity) {
         threeEntity.objectId = entity.objectId
         threeEntity.ownerId = entity.ownerId
