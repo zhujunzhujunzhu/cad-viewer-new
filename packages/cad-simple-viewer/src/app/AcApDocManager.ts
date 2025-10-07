@@ -423,7 +423,13 @@ export class AcApDocManager {
       this.events.documentActivated.dispatch({ doc })
       this.setActiveLayout()
       const db = doc.database
-      this.curView.zoomTo(new AcGeBox2d(db.extmin, db.extmax))
+
+      // The extents of drawing database may be empty. Espically dxf files.
+      if (db.extents.isEmpty()) {
+        this.curView.zoomToFit()
+      } else {
+        this.curView.zoomTo(new AcGeBox2d(db.extmin, db.extmax))
+      }
     }
   }
 

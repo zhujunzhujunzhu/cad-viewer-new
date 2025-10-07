@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 0.0.21
+
+### Patch Changes
+
+- fix: fix issue 74, 75, and 76
+
 ## 0.0.20
 
 ### Patch Changes

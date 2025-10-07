@@ -381,7 +381,7 @@ export abstract class AcEdBaseView {
    * @param timeout - Maximum time (ms) to wait before executing zoom to fit
    * action. Default: 0 (no timeout).
    */
-  abstract zoomToFit(timeout: number): void
+  abstract zoomToFit(timeout?: number): void
 
   /**
    * Gets the background color of the view.
