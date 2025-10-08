@@ -9,6 +9,7 @@ export default {
     Dimension: '标注',
     DiametricDimension: '直径标注',
     Ellipse: '椭圆',
+    Face: '面片',
     Hatch: '填充',
     Leader: '引线',
     Line: '线',

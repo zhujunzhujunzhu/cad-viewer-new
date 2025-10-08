@@ -9,6 +9,7 @@ export default {
     Dimension: 'Dimension',
     DiametricDimension: 'Diametric Dimension',
     Ellipse: 'Ellipse',
+    Face: 'Face',
     Hatch: 'Hatch',
     Leader: 'Leader',
     Line: 'Line',
