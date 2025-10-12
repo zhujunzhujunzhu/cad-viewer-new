@@ -1,7 +1,7 @@
 {
   "name": "@mlightcad/svg-renderer",
   "private": true,
-  "version": "0.0.21",
+  "version": "0.0.22",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -29,6 +29,6 @@
     "lint:fix": "eslint --fix --quiet src/"
   },
   "peerDependencies": {
-    "@mlightcad/data-model": "1.2.23"
+    "@mlightcad/data-model": "1.2.24"
   }
 }
