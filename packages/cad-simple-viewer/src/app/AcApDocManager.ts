@@ -46,6 +46,8 @@ export class AcApDocManager {
   private _context: AcApContext
   /** Font loader for managing CAD text fonts */
   private _fontLoader: AcApFontLoader
+  /** Base URL to get fonts, templates, and example files */
+  private _baseUrl: string
   /** Singleton instance */
   private static _instance?: AcApDocManager
 
@@ -67,6 +69,7 @@ export class AcApDocManager {
    * @private
    */
   private constructor(canvas?: HTMLCanvasElement) {
+    this._baseUrl = 'https://mlightcad.gitlab.io/cad-data/'
     // Create one empty drawing
     const doc = new AcApDocument()
     doc.database.events.openProgress.addEventListener(args => {
@@ -87,7 +90,8 @@ export class AcApDocManager {
     }
     const view = new AcTrView2d({ canvas, calculateSizeCallback: callback })
     this._context = new AcApContext(view, doc)
-    this._fontLoader = new AcApFontLoader(view.renderer)
+    this._fontLoader = new AcApFontLoader()
+    this._fontLoader.baseUrl = this._baseUrl + 'fonts/'
     acdbHostApplicationServices().workingDatabase = doc.database
     this.registerCommands()
   }
@@ -176,6 +180,17 @@ export class AcApDocManager {
    */
   get editor() {
     return this._context.view.editor
+  }
+
+  /**
+   * Base URL to load fonts
+   */
+  get baseUrl() {
+    return this._baseUrl
+  }
+  set baseUrl(value: string) {
+    this._baseUrl = value
+    this._fontLoader.baseUrl = value + 'fonts/'
   }
 
   /**

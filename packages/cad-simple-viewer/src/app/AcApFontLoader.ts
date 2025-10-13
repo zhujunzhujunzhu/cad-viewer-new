@@ -1,8 +1,7 @@
 import { AcDbFontInfo, AcDbFontLoader } from '@mlightcad/data-model'
-import { AcTrRenderer } from '@mlightcad/three-renderer'
-import { find, findIndex } from 'lodash-es'
+import { AcTrFontLoader } from '@mlightcad/three-renderer'
 
-import { eventBus } from '../editor'
+import { AcEdFontNotLoadedInfo, eventBus } from '../editor'
 
 /**
  * Font loader implementation for CAD text rendering.
@@ -30,8 +29,8 @@ import { eventBus } from '../editor'
  * ```
  */
 export class AcApFontLoader implements AcDbFontLoader {
-  /** The Three.js renderer used for font loading */
-  private _cadRenderer: AcTrRenderer
+  /** Font loader in mtext-render */
+  private _loader: AcTrFontLoader
   /** Cache of available fonts fetched from the CDN */
   private _avaiableFonts: AcDbFontInfo[]
 
@@ -40,9 +39,19 @@ export class AcApFontLoader implements AcDbFontLoader {
    *
    * @param renderer - The Three.js renderer that will use the loaded fonts
    */
-  constructor(renderer: AcTrRenderer) {
-    this._cadRenderer = renderer
+  constructor() {
+    this._loader = new AcTrFontLoader()
     this._avaiableFonts = []
+  }
+
+  /**
+   * Base URL to load fonts
+   */
+  get baseUrl() {
+    return this._loader.baseUrl
+  }
+  set baseUrl(value: string) {
+    this._loader.baseUrl = value
   }
 
   /**
@@ -55,22 +64,9 @@ export class AcApFontLoader implements AcDbFontLoader {
   /**
    * @inheritdoc
    */
-  async getAvaiableFonts() {
+  async getAvaiableFonts(): Promise<AcDbFontInfo[]> {
     if (this._avaiableFonts.length == 0) {
-      const baseUrl = 'https://mlightcad.gitlab.io/cad-data/fonts/'
-      const fontMetaDataUrl = baseUrl + 'fonts.json'
-      try {
-        const response = await fetch(fontMetaDataUrl)
-        this._avaiableFonts = (await response.json()) as AcDbFontInfo[]
-      } catch (_) {
-        eventBus.emit('failed-to-get-avaiable-fonts', {
-          url: fontMetaDataUrl
-        })
-      }
-
-      this._avaiableFonts.forEach(font => {
-        font.url = baseUrl + font.file
-      })
+      this._avaiableFonts = await this._loader.getAvaiableFonts()
     }
     return this._avaiableFonts
   }
@@ -79,28 +75,28 @@ export class AcApFontLoader implements AcDbFontLoader {
    * @inheritdoc
    */
   async load(fontNames: string[]) {
-    await this.getAvaiableFonts()
-
-    const urls: string[] = []
-    fontNames.forEach(font => {
-      const lowerCaseFontName = font.toLowerCase()
-      const result = find(this._avaiableFonts, (item: AcDbFontInfo) => {
-        return (
-          findIndex(item.name, name => {
-            return name.toLowerCase() == lowerCaseFontName
-          }) >= 0
-        )
-      })
-      if (result) urls.push(result.url)
-    })
-    const loadStatus = await this._cadRenderer.loadFonts(urls)
+    const loadStatus = await this._loader.load(fontNames)
+    const fontsNotFound: string[] = []
+    const fontsNotLoaded: AcEdFontNotLoadedInfo[] = []
     loadStatus.forEach(item => {
-      if (!item.status) {
-        eventBus.emit('font-not-loaded', {
+      if (item.status === 'NotFound') {
+        fontsNotFound.push(item.fontName)
+      } else if (item.status === 'FailedToLoad') {
+        fontsNotLoaded.push({
           fontName: item.fontName,
           url: item.url
         })
       }
     })
+    if (fontsNotFound.length > 0) {
+      eventBus.emit('fonts-not-found', {
+        fonts: fontsNotFound
+      })
+    }
+    if (fontsNotLoaded.length > 0) {
+      eventBus.emit('fonts-not-loaded', {
+        fonts: fontsNotLoaded
+      })
+    }
   }
 }

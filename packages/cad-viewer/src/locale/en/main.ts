@@ -87,7 +87,10 @@ export default {
   message: {
     loadingFonts: 'Loading fonts ...',
     loadingDwgConverter: 'Loading DWG converter...',
+    fontNotFound: 'Font "{fontName}" can not be found in font repository!',
     fontNotLoaded: 'Font "{fontName}" can not be loaded from "{url}"!',
+    fontsNotFound: 'The following fonts can not be found in font repository!',
+    fontsNotLoaded: 'The following fonts can not be loaded!',
     failedToGetAvaiableFonts: 'Failed to get avaiable fonts from "{url}"!',
     failedToOpenFile: 'Failed to open file "{fileName}"!',
     fetchingDrawingFile: 'Fetching file ...',

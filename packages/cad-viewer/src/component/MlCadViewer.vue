@@ -82,7 +82,7 @@
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
 import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
 import { ElMessage } from 'element-plus'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, h, onMounted, ref, type VNode, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { initializeCadViewer, registerDialogs, store } from '../app'
@@ -296,17 +296,59 @@ eventBus.on('message', params => {
   })
 })
 
-// Handle font loading failures - important for proper text rendering
-eventBus.on('font-not-loaded', params => {
-  ElMessage({
-    message: t('main.message.fontNotLoaded', {
-      fontName: params.fontName,
-      url: params.url
-    }),
-    grouping: true,
-    type: 'error',
-    showClose: true
-  })
+// Handle failure that fonts can't be loaded from remote font repository
+eventBus.on('fonts-not-loaded', params => {
+  if (params.fonts.length === 1) {
+    const font = params.fonts[0]
+    ElMessage({
+      message: t('main.message.fontNotLoaded', {
+        fontName: font.fontName,
+        url: font.url
+      }),
+      grouping: true,
+      type: 'error',
+      showClose: true
+    })
+  } else if (params.fonts.length > 1) {
+    const lines: VNode[] = []
+    lines.push(h('p', t('main.message.fontsNotLoaded')))
+    params.fonts.forEach(font => {
+      lines.push(h('p', `- ${font.fontName}: ${font.url}`))
+    })
+    ElMessage({
+      message: h('div', lines),
+      grouping: true,
+      type: 'error',
+      showClose: true
+    })
+  }
+})
+
+// Handle failure that fonts can't be found in remote font repository
+eventBus.on('fonts-not-found', params => {
+  if (params.fonts.length === 1) {
+    const font = params.fonts[0]
+    ElMessage({
+      message: t('main.message.fontNotLoaded', {
+        fontName: font
+      }),
+      grouping: true,
+      type: 'error',
+      showClose: true
+    })
+  } else if (params.fonts.length > 1) {
+    const lines: VNode[] = []
+    lines.push(h('p', t('main.message.fontsNotFound')))
+    params.fonts.forEach(font => {
+      lines.push(h('p', `- ${font}`))
+    })
+    ElMessage({
+      message: h('div', lines),
+      grouping: true,
+      type: 'error',
+      showClose: true
+    })
+  }
 })
 
 // Handle failures when trying to get available fonts from the system

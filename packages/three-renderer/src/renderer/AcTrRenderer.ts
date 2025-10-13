@@ -123,10 +123,6 @@ export class AcTrRenderer implements AcGiRenderer<AcTrEntity> {
     return this._renderer
   }
 
-  async loadFonts(urls: string[]) {
-    return await FontManager.instance.loadFontsByUrls(urls)
-  }
-
   /**
    * @inheritdoc
    */

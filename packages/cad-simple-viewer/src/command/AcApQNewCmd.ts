@@ -30,7 +30,7 @@ export class AcApQNewCmd extends AcEdCommand {
    * @param _context - The application context (unused in this command)
    */
   execute(_context: AcApContext) {
-    const baseUrl = 'https://cdn.jsdelivr.net/gh/mlight-lee/cad-data/templates/'
-    AcApDocManager.instance.openUrl(baseUrl + 'acadiso.dxf')
+    const baseUrl = AcApDocManager.instance.baseUrl
+    AcApDocManager.instance.openUrl(baseUrl + 'templates/acadiso.dxf')
   }
 }

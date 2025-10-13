@@ -86,7 +86,10 @@ export default {
   message: {
     loadingFonts: '正在加载字体...',
     loadingDwgConverter: '正在加载DWG转换器...',
+    fontNotFound: '在字体库中找不到字体"{fontName}"！',
     fontNotLoaded: '无法从"{url}"加载字体"{fontName}"！',
+    fontsNotFound: '在字体库中找不到如下字体：',
+    fontsNotLoaded: '无法加载如下字体：',
     failedToGetAvaiableFonts: '无法从"{url}"获取可用的字体信息！',
     failedToOpenFile: '无法打开文件"{fileName}"！',
     fetchingDrawingFile: '正在加载图纸文件...',

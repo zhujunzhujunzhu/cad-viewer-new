@@ -8,6 +8,13 @@ import mitt, { type Emitter } from 'mitt'
  */
 export type AcEdMessageType = 'success' | 'warning' | 'info' | 'error'
 
+export interface AcEdFontNotLoadedInfo {
+  /** Font name */
+  fontName: string
+  /** URL where the font was attempted to be loaded from */
+  url: string
+}
+
 /**
  * Type definition for all events that can be emitted through the global event bus.
  *
@@ -16,7 +23,7 @@ export type AcEdMessageType = 'success' | 'warning' | 'info' | 'error'
  *
  * ## Event Categories
  * - **File Operations**: `open-file`, `open-file-progress`, `failed-to-open-file`
- * - **Font Management**: `font-not-loaded`, `failed-to-get-avaiable-fonts`, `font-not-found`
+ * - **Font Management**: `fonts-not-loaded`, `failed-to-get-avaiable-fonts`, `font-not-found`
  * - **User Messages**: `message`
  */
 export type AcEdEvents = {
@@ -31,12 +38,13 @@ export type AcEdEvents = {
     /** The severity/type of the message */
     type: AcEdMessageType
   }
-  /** Emitted when a font fails to load */
-  'font-not-loaded': {
-    /** Name of the font that failed to load */
-    fontName: string
-    /** URL where the font was attempted to be loaded from */
-    url: string
+  /** Emitted when some fonts can not be found in font repository */
+  'fonts-not-found': {
+    fonts: string[]
+  }
+  /** Emitted when some fonts fails to load */
+  'fonts-not-loaded': {
+    fonts: AcEdFontNotLoadedInfo[]
   }
   /** Emitted when the available fonts list cannot be retrieved */
   'failed-to-get-avaiable-fonts': {
