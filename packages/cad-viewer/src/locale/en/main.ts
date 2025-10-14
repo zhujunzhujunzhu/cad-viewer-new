@@ -67,6 +67,9 @@ export default {
     },
     warning: {
       font: 'The following fonts are not found!'
+    },
+    notification: {
+      tooltip: 'Show notifications'
     }
   },
   toolPalette: {
@@ -87,14 +90,31 @@ export default {
   message: {
     loadingFonts: 'Loading fonts ...',
     loadingDwgConverter: 'Loading DWG converter...',
-    fontNotFound: 'Font "{fontName}" can not be found in font repository!',
-    fontNotLoaded: 'Font "{fontName}" can not be loaded from "{url}"!',
-    fontsNotFound: 'The following fonts can not be found in font repository!',
-    fontsNotLoaded: 'The following fonts can not be loaded!',
+    fontsNotFound: 'Fonts "{fonts}" can not be found in font repository!',
+    fontsNotLoaded: 'Fonts "{fonts}" can not be loaded!',
     failedToGetAvaiableFonts: 'Failed to get avaiable fonts from "{url}"!',
     failedToOpenFile: 'Failed to open file "{fileName}"!',
     fetchingDrawingFile: 'Fetching file ...',
     unknownEntities:
       'This drawing contains {count} unknown or unsupported entities! Those entities will not be shown.'
+  },
+  notification: {
+    center: {
+      title: 'Notifications',
+      clearAll: 'Clear All',
+      noNotifications: 'No notifications'
+    },
+    time: {
+      justNow: 'Just now',
+      minutesAgo: '{count} minute ago | {count} minutes ago',
+      hoursAgo: '{count} hour ago | {count} hours ago',
+      daysAgo: '{count} day ago | {count} days ago'
+    },
+    title: {
+      failedToOpenFile: 'Failed to Open File',
+      fontNotFound: 'Font Not Found',
+      fontNotLoaded: 'Font Not Loaded',
+      parsingWarning: 'Issues on Parsing Drawing'
+    }
   }
 }

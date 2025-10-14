@@ -66,6 +66,9 @@ export default {
     },
     warning: {
       font: '没有找到如下字体：'
+    },
+    notification: {
+      tooltip: '显示通知'
     }
   },
   toolPalette: {
@@ -86,14 +89,31 @@ export default {
   message: {
     loadingFonts: '正在加载字体...',
     loadingDwgConverter: '正在加载DWG转换器...',
-    fontNotFound: '在字体库中找不到字体"{fontName}"！',
-    fontNotLoaded: '无法从"{url}"加载字体"{fontName}"！',
-    fontsNotFound: '在字体库中找不到如下字体：',
-    fontsNotLoaded: '无法加载如下字体：',
+    fontsNotFound: '在字体库中找不到字体：{fonts}。',
+    fontsNotLoaded: '无法加载字体：{fonts}。',
     failedToGetAvaiableFonts: '无法从"{url}"获取可用的字体信息！',
     failedToOpenFile: '无法打开文件"{fileName}"！',
     fetchingDrawingFile: '正在加载图纸文件...',
     unknownEntities:
       '这张图纸中包含了{count}个未知或不支持的实体，这些实体将无法显示！'
+  },
+  notification: {
+    center: {
+      title: '通知',
+      clearAll: '清除全部',
+      noNotifications: '暂无通知'
+    },
+    time: {
+      justNow: '刚刚',
+      minutesAgo: '{count} 分钟前',
+      hoursAgo: '{count} 小时前',
+      daysAgo: '{count} 天前'
+    },
+    title: {
+      failedToOpenFile: '无法打开文件',
+      fontNotFound: '找不到字体',
+      fontNotLoaded: '无法加载字体',
+      parsingWarning: '解析图纸问题'
+    }
   }
 }

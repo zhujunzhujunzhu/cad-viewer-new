@@ -25,6 +25,7 @@
           >{{ posText }}</el-button
         >
         <ml-warning-button />
+        <ml-notification-button @click="toggleNotificationCenter" />
         <ml-theme-button />
         <ml-full-screen-button />
         <ml-point-style-button />
@@ -46,6 +47,7 @@ import {
   useSettings
 } from '../../composable'
 import MlFullScreenButton from './MlFullScreenButton.vue'
+import MlNotificationButton from './MlNotificationButton.vue'
 import MlPointStyleButton from './MlPointStyleButton.vue'
 import MlProgress from './MlProgress.vue'
 import MlSettingButton from './MlSettingButton.vue'
@@ -60,6 +62,14 @@ const handleSelectLayout = (layout: LayoutInfo) => {
   acdbHostApplicationServices().layoutManager.setCurrentLayoutBtrId(
     layout.blockTableRecordId
   )
+}
+
+const emit = defineEmits<{
+  toggleNotificationCenter: []
+}>()
+
+const toggleNotificationCenter = () => {
+  emit('toggleNotificationCenter')
 }
 </script>
 

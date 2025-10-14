@@ -82,11 +82,11 @@
 import { AcApDocManager, eventBus } from '@mlightcad/cad-simple-viewer'
 import { AcDbOpenDatabaseOptions } from '@mlightcad/data-model'
 import { ElMessage } from 'element-plus'
-import { computed, h, onMounted, ref, type VNode, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { initializeCadViewer, registerDialogs, store } from '../app'
-import { useLocale } from '../composable'
+import { useLocale, useNotificationCenter } from '../composable'
 import { LocaleProp } from '../locale'
 import { MlDialogManager, MlFileReader } from './common'
 import { MlLayerManager } from './layerManager'
@@ -97,6 +97,7 @@ import {
   MlMainMenu,
   MlToolBars
 } from './layout'
+import { MlNotificationCenter } from './notification'
 import { MlStatusBar } from './statusBar'
 
 // Define component props with their purposes
@@ -120,6 +121,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n()
 const { effectiveLocale, elementPlusLocale } = useLocale(props.locale)
+const { info, warning, error, success } = useNotificationCenter()
 
 // Canvas element reference
 const canvasRef = ref<HTMLCanvasElement>()
@@ -129,6 +131,9 @@ const editorRef = ref<AcApDocManager | null>(null)
 
 // Computed property to ensure proper typing
 const editor = computed(() => editorRef.value as AcApDocManager)
+
+// Notification center visibility
+const showNotificationCenter = ref(false)
 
 /**
  * Handles file read events from the file reader component
@@ -288,67 +293,44 @@ onMounted(async () => {
 
 // Handle general messages from the CAD system (info, warnings, errors)
 eventBus.on('message', params => {
+  // Show both ElMessage and notification center
   ElMessage({
     message: params.message,
     grouping: true,
     type: params.type,
     showClose: true
   })
+
+  // Also add to notification center
+  switch (params.type) {
+    case 'success':
+      success('System Message', params.message)
+      break
+    case 'warning':
+      warning('System Warning', params.message)
+      break
+    case 'error':
+      error('System Error', params.message)
+      break
+    default:
+      info('System Info', params.message)
+      break
+  }
 })
 
 // Handle failure that fonts can't be loaded from remote font repository
 eventBus.on('fonts-not-loaded', params => {
-  if (params.fonts.length === 1) {
-    const font = params.fonts[0]
-    ElMessage({
-      message: t('main.message.fontNotLoaded', {
-        fontName: font.fontName,
-        url: font.url
-      }),
-      grouping: true,
-      type: 'error',
-      showClose: true
-    })
-  } else if (params.fonts.length > 1) {
-    const lines: VNode[] = []
-    lines.push(h('p', t('main.message.fontsNotLoaded')))
-    params.fonts.forEach(font => {
-      lines.push(h('p', `- ${font.fontName}: ${font.url}`))
-    })
-    ElMessage({
-      message: h('div', lines),
-      grouping: true,
-      type: 'error',
-      showClose: true
-    })
-  }
+  const fonts = params.fonts.map(font => font.fontName).join(', ')
+  const message = t('main.message.fontsNotLoaded', { fonts })
+  error(t('main.notification.title.fontNotFound'), message)
 })
 
 // Handle failure that fonts can't be found in remote font repository
 eventBus.on('fonts-not-found', params => {
-  if (params.fonts.length === 1) {
-    const font = params.fonts[0]
-    ElMessage({
-      message: t('main.message.fontNotLoaded', {
-        fontName: font
-      }),
-      grouping: true,
-      type: 'error',
-      showClose: true
-    })
-  } else if (params.fonts.length > 1) {
-    const lines: VNode[] = []
-    lines.push(h('p', t('main.message.fontsNotFound')))
-    params.fonts.forEach(font => {
-      lines.push(h('p', `- ${font}`))
-    })
-    ElMessage({
-      message: h('div', lines),
-      grouping: true,
-      type: 'error',
-      showClose: true
-    })
-  }
+  const message = t('main.message.fontsNotFound', {
+    fonts: params.fonts.join(', ')
+  })
+  warning(t('main.notification.title.fontNotFound'), message)
 })
 
 // Handle failures when trying to get available fonts from the system
@@ -363,13 +345,27 @@ eventBus.on('failed-to-get-avaiable-fonts', params => {
 
 // Handle file opening failures with user-friendly error messages
 eventBus.on('failed-to-open-file', params => {
+  const message = t('main.message.failedToOpenFile', {
+    fileName: params.fileName
+  })
   ElMessage({
-    message: t('main.message.failedToOpenFile', { fileName: params.fileName }),
+    message,
     grouping: true,
     type: 'error',
     showClose: true
   })
+  error('File Opening Failed', message)
 })
+
+// Toggle notification center visibility
+const toggleNotificationCenter = () => {
+  showNotificationCenter.value = !showNotificationCenter.value
+}
+
+// Close notification center
+const closeNotificationCenter = () => {
+  showNotificationCenter.value = false
+}
 </script>
 
 <template>
@@ -407,7 +403,7 @@ eventBus.on('failed-to-open-file', params => {
         <ml-command-line />
 
         <!-- Status bar with progress, settings, and theme controls -->
-        <ml-status-bar />
+        <ml-status-bar @toggle-notification-center="toggleNotificationCenter" />
       </footer>
 
       <!-- Hidden components for file handling and entity information -->
@@ -416,6 +412,12 @@ eventBus.on('failed-to-open-file', params => {
 
       <!-- Entity info panel for displaying object properties -->
       <ml-entity-info />
+
+      <!-- Notification center -->
+      <ml-notification-center
+        v-if="showNotificationCenter"
+        @close="closeNotificationCenter"
+      />
     </el-config-provider>
   </div>
 </template>

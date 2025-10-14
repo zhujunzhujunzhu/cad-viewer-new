@@ -15,15 +15,17 @@ import {
   AcDbParsingTaskStats,
   AcDbProgressdEventArgs
 } from '@mlightcad/data-model'
-import { ElLoading, ElMessage, ElProgress } from 'element-plus'
+import { ElLoading, ElProgress } from 'element-plus'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import { useNotificationCenter } from '../../composable'
 import { conversionSubStageName } from '../../locale'
 
 const { t } = useI18n()
 const percentage = ref(0)
 const visible = ref(false)
+const { warning } = useNotificationCenter()
 
 const updateProgress = (data: AcDbProgressdEventArgs) => {
   if (data.stage === 'CONVERSION') {
@@ -41,14 +43,12 @@ const updateProgress = (data: AcDbProgressdEventArgs) => {
       ) {
         const stats = data.data as AcDbParsingTaskStats
         if (stats.unknownEntityCount > 0) {
-          ElMessage({
-            showClose: true,
-            message: t('main.message.unknownEntities', {
+          warning(
+            t('main.notification.title.parsingWarning'),
+            t('main.message.unknownEntities', {
               count: stats.unknownEntityCount
-            }),
-            grouping: true,
-            type: 'warning'
-          })
+            })
+          )
         }
       }
     }
