@@ -2,13 +2,11 @@
 
 [English](./README.md)
 
-[**🌐 在线演示**](https://mlightcad.gitlab.io/cad-viewer/)
-
-[**🌐 API 文档**](https://mlightcad.gitlab.io/cad-viewer/docs/)
-
-[**🌐 项目 Wiki**](https://mlightcad.gitlab.io/cad-viewer/wiki/)
-
 CAD-Viewer 是一款高性能、现代化的 Web 端 CAD 查看与编辑器，灵感来自 AutoCAD。它支持在纯浏览器环境中查看与编辑 DWG/DXF 文件，**无需任何后端服务**，并具备出色的渲染速度与流畅交互。项目采用模块化设计，便于与其他应用无缝集成。
+
+- [**🌐 在线演示**](https://mlightcad.gitlab.io/cad-viewer/)
+- [**🌐 API 文档**](https://mlightcad.gitlab.io/cad-viewer/docs/)
+- [**🌐 项目 Wiki**](https://gitlab.com/mlightcad/cad-viewer/-/wikis/home)
 
 ![CAD-Viewer](./assets/dwg-viewer.jpg)
 
