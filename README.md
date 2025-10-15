@@ -2,13 +2,11 @@
 
 [简体中文](./README.zh-CN.md)
 
-[**🌐 Live Demo**](https://mlightcad.gitlab.io/cad-viewer/)
-
-[**🌐 API Docs**](https://mlightcad.gitlab.io/cad-viewer/docs/)
-
-[**🌐 Wiki**](https://mlightcad.gitlab.io/cad-viewer/wiki/)
-
 CAD-Viewer is a **high-performance**, modern, web-based CAD editor inspired by AutoCAD. It enables users to view and edit DWG/DXF files **entirely in the browser without requiring any backend server**, providing exceptional rendering speed and smooth interactions. The project is modular and designed for seamless integration with other applications.
+
+- [**🌐 Live Demo**](https://mlightcad.gitlab.io/cad-viewer/)
+- [**🌐 API Docs**](https://mlightcad.gitlab.io/cad-viewer/docs/)
+- [**🌐 Wiki**](https://gitlab.com/mlightcad/cad-viewer/-/wikis/home)
 
 ![CAD-Viewer](./assets/dwg-viewer.jpg)
 
