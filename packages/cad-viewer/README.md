@@ -11,6 +11,7 @@ CAD Viewer is a **high-performance** Vue 3 component for viewing and editing CAD
 - **Remote file support** - Load CAD files from URLs automatically
 - **Easy integration** - No server setup or backend infrastructure needed for third-party integration
 - **Customizable UI** - Control visibility of toolbars, command line, coordinates, and performance stats
+- **Customizable Resources** - Set custom base URLs for fonts, templates, and example files
 - Modern UI optimized for large CAD file handling
 - State management for layers, entities, and settings
 - Integration with optimized SVG and THREE.js renderers
@@ -140,6 +141,12 @@ Then create one vue component as follows.
       :background="0x808080" 
       :local-file="selectedFile" 
     /> -->
+    
+    <!-- With custom base URL for fonts and templates -->
+    <!-- <MlCADViewer 
+      :background="0x808080" 
+      :base-url="'https://my-cdn.com/cad-data/'"
+    /> -->
   </div>
 </template>
 
@@ -180,6 +187,7 @@ The `MlCadViewer` component accepts the following props:
 | `url` | `string` | `undefined` | Optional URL to automatically load a CAD file when the component mounts. The file will be fetched and opened automatically. **Note**: If not provided, users can still load local files using the main menu "Open" option. |
 | `localFile` | `File` | `undefined` | Optional local File object to automatically load a CAD file when the component mounts. The file will be read and opened automatically. **Note**: This takes precedence over the `url` prop if both are provided. |
 | `background` | `number` | `undefined` | Background color as 24-bit hexadecimal RGB (e.g., `0x000000` for black, `0x808080` for gray). |
+| `baseUrl` | `string` | `undefined` | Base URL for loading fonts, templates, and example files. This URL is used by the CAD viewer to load resources like fonts and drawing templates. **Note**: If not provided, uses the default URL. |
 
 ### UI Settings
 
@@ -209,6 +217,12 @@ The `MlCadViewer` reads its UI visibility from the global `AcApSettingManager` (
     locale="en" 
     :local-file="selectedFile" 
   /> -->
+  
+  <!-- Custom baseUrl for fonts and templates -->
+  <!-- <MlCadViewer 
+    locale="en" 
+    :base-url="'https://my-cdn.com/cad-data/'"
+  /> -->
 </template>
 
 <script setup lang="ts">
@@ -228,6 +242,42 @@ AcApSettingManager.instance.isShowCommandLine = false
 
 - Settings are global and immediately reflected by `MlCadViewer`.
 - You can change them at runtime using the same `AcApSettingManager.instance` reference.
+
+### Base URL Configuration
+
+The `baseUrl` property allows you to customize where the CAD viewer loads fonts, templates, and example files from. This is particularly useful for:
+
+- **Self-hosted resources**: Host your own fonts and templates on your CDN or server
+- **Corporate environments**: Use internal servers for CAD resources
+- **Offline deployments**: Serve resources from local file systems
+- **Custom branding**: Use your own templates and fonts
+
+#### Default Behavior
+If no `baseUrl` is provided, the viewer uses the default URL: `https://mlightcad.gitlab.io/cad-data/`
+
+#### Resource Structure
+When using a custom `baseUrl`, ensure your server has the following structure:
+```
+your-base-url/
+├── fonts/           # Font files for text rendering
+├── templates/       # Drawing templates (e.g., acadiso.dxf)
+└── examples/        # Example CAD files
+```
+
+#### Example: Custom Base URL
+```vue
+<template>
+  <MlCadViewer 
+    :base-url="'https://my-company.com/cad-resources/'"
+    :url="'https://my-company.com/drawings/project.dwg'"
+  />
+</template>
+```
+
+This configuration will:
+- Load fonts from `https://my-company.com/cad-resources/fonts/`
+- Load templates from `https://my-company.com/cad-resources/templates/`
+- Use the custom base URL for any "Quick New" operations
 
 ### Component Features
 

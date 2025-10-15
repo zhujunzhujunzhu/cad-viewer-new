@@ -1,5 +1,7 @@
 # CAD-Viewer
 
+[简体中文](./README.zh-CN.md)
+
 [**🌐 Live Demo**](https://mlightcad.gitlab.io/cad-viewer/)
 
 [**🌐 API Docs**](https://mlightcad.gitlab.io/cad-viewer/docs/)

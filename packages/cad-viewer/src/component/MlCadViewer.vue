@@ -17,6 +17,7 @@
   - Multi-language support (English/Chinese)
   - Dark/light theme support
   - Status bar with progress and settings
+  - Customizable base URL for fonts, templates, and example files
   
   COMPONENTS INCLUDED:
   - Main menu and language selector
@@ -67,6 +68,12 @@
  *   :locale="'en'"
  * />
  *
+ * // Usage with custom baseUrl for fonts and templates
+ * <MlCadViewer
+ *   :locale="'en'"
+ *   :base-url="'https://my-cdn.com/cad-data/'"
+ * />
+ *
  * // Import statement
  * import { MlCadViewer } from '@mlightcad/cad-viewer'
  * ```
@@ -110,13 +117,16 @@ interface Props {
   localFile?: File
   /** Background color as 24-bit hexadecimal RGB number (e.g., 0x000000) */
   background?: number
+  /** Base URL for loading fonts, templates, and example files (e.g., 'https://example.com/cad-data/') */
+  baseUrl?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   locale: 'default',
   url: undefined,
   localFile: undefined,
-  background: undefined
+  background: undefined,
+  baseUrl: undefined
 })
 
 const { t } = useI18n()
@@ -263,6 +273,16 @@ watch(
   }
 )
 
+// Watch for baseUrl changes and apply to the document manager
+watch(
+  () => props.baseUrl,
+  newBaseUrl => {
+    if (newBaseUrl) {
+      AcApDocManager.instance.baseUrl = newBaseUrl
+    }
+  }
+)
+
 // Component lifecycle: Initialize and load initial file if URL or localFile is provided
 onMounted(async () => {
   // Initialize the CAD viewer with the internal canvas
@@ -285,6 +305,11 @@ onMounted(async () => {
   // Apply initial background color if provided
   if (props.background != null) {
     AcApDocManager.instance.curView.backgroundColor = props.background
+  }
+
+  // Apply initial baseUrl if provided
+  if (props.baseUrl) {
+    AcApDocManager.instance.baseUrl = props.baseUrl
   }
 })
 
