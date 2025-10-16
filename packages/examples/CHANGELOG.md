@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.0.23
+
+### Patch Changes
+
+- feat: bump version to fix some bugs
+
 ## 1.0.22
 
 ### Patch Changes

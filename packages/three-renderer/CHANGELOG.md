@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.1.11
+
+### Patch Changes
+
+- feat: bump version to fix some bugs
+
 ## 1.1.10
 
 ### Patch Changes
