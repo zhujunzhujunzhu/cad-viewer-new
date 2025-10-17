@@ -20,7 +20,7 @@
       <ml-progress />
       <el-button-group class="ml-status-bar-right-button-group">
         <el-button
-          v-if="features.isShowCoordinate"
+          v-if="features.isShowCoordinate && !isMobile"
           class="ml-status-bar-current-pos"
           >{{ posText }}</el-button
         >
@@ -43,6 +43,7 @@ import { MlStatusBar } from '@mlightcad/ui-components'
 import {
   LayoutInfo,
   useCurrentPos,
+  useIsMobile,
   useLayouts,
   useSettings
 } from '../../composable'
@@ -57,6 +58,7 @@ import MlWarningButton from './MlWarningButton.vue'
 const { text: posText } = useCurrentPos(AcApDocManager.instance.curView)
 const layouts = useLayouts(AcApDocManager.instance)
 const features = useSettings()
+const { isMobile } = useIsMobile()
 
 const handleSelectLayout = (layout: LayoutInfo) => {
   acdbHostApplicationServices().layoutManager.setCurrentLayoutBtrId(
