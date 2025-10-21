@@ -1,5 +1,11 @@
 # @mlightcad/three-renderer
 
+## 1.2.0
+
+### Minor Changes
+
+- feat: support dxf file with gbk encoding
+
 ## 1.1.11
 
 ### Patch Changes

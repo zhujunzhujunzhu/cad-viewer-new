@@ -159,7 +159,7 @@ const showNotificationCenter = ref(false)
  */
 const handleFileRead = async (
   fileName: string,
-  fileContent: string | ArrayBuffer
+  fileContent: ArrayBuffer
 ) => {
   const options: AcDbOpenDatabaseOptions = { minimumChunkSize: 1000 }
   await AcApDocManager.instance.openDocument(fileName, fileContent, options)
@@ -199,25 +199,16 @@ const openFileFromUrl = async (url: string) => {
  */
 const openLocalFile = async (file: File) => {
   try {
-    const fileExtension = file.name.split('.').pop()?.toLowerCase()
     const reader = new FileReader()
-
-    // Read file content based on file type
-    if (fileExtension === 'dxf') {
-      reader.readAsText(file)
-    } else if (fileExtension === 'dwg') {
-      reader.readAsArrayBuffer(file)
-    } else {
-      throw new Error(`Unsupported file type: ${fileExtension}`)
-    }
+    reader.readAsArrayBuffer(file)
 
     // Wait for file reading to complete
-    const fileContent = await new Promise<string | ArrayBuffer>(
+    const fileContent = await new Promise<ArrayBuffer>(
       (resolve, reject) => {
         reader.onload = event => {
           const result = event.target?.result
           if (result) {
-            resolve(result)
+            resolve(result as ArrayBuffer)
           } else {
             reject(new Error('Failed to read file content'))
           }

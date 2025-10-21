@@ -1,5 +1,11 @@
 # @mlightcad/cad-viewer-examples
 
+## 1.2.0
+
+### Minor Changes
+
+- feat: support dxf file with gbk encoding
+
 ## 1.0.23
 
 ### Patch Changes

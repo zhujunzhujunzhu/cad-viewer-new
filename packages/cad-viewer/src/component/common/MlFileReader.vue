@@ -51,17 +51,8 @@ const handleFileChange = (event: Event): void => {
   const selectedFile = target.files?.[0]
 
   if (selectedFile && selectedFile.name) {
-    const fileExtension = selectedFile.name
-      .split('.')
-      .pop()
-      ?.toLocaleLowerCase()
     const reader = new FileReader()
-    if (fileExtension == 'dxf') {
-      // Read the file content as text
-      reader.readAsText(selectedFile)
-    } else if (fileExtension == 'dwg') {
-      reader.readAsArrayBuffer(selectedFile)
-    }
+    reader.readAsArrayBuffer(selectedFile)
 
     reader.onload = (event: ProgressEvent<FileReader>) => {
       const fileContent = event.target?.result

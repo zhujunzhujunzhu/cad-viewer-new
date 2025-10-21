@@ -1,5 +1,11 @@
 # @mlightcad/svg-renderer
 
+## 1.2.0
+
+### Minor Changes
+
+- feat: support dxf file with gbk encoding
+
 ## 0.0.23
 
 ### Patch Changes

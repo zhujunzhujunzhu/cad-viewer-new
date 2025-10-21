@@ -1,5 +1,16 @@
 # @mlightcad/cad-viewer
 
+## 1.2.0
+
+### Minor Changes
+
+- feat: support dxf file with gbk encoding
+
+### Patch Changes
+
+- Updated dependencies
+  - @mlightcad/cad-simple-viewer@1.2.0
+
 ## 1.1.12
 
 ### Patch Changes

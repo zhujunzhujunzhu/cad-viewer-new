@@ -286,12 +286,12 @@ export class AcApDocManager {
   /**
    * Opens a CAD document from file content.
    *
-   * This method loads a document from the provided file content (string or binary data)
+   * This method loads a document from the provided file content (binary data)
    * and replaces the current document. It handles the complete document lifecycle
    * including before/after open events.
    *
    * @param fileName - The name of the file being opened (used for format detection)
-   * @param content - The file content as string or ArrayBuffer
+   * @param content - The file content
    * @param options - Database opening options including font loader settings
    * @returns Promise that resolves to true if the document was successfully opened, false otherwise
    *
@@ -303,7 +303,7 @@ export class AcApDocManager {
    */
   async openDocument(
     fileName: string,
-    content: string | ArrayBuffer,
+    content: ArrayBuffer,
     options: AcDbOpenDatabaseOptions
   ) {
     this.onBeforeOpenDocument()
