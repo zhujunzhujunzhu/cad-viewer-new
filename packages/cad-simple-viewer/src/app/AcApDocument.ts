@@ -84,7 +84,7 @@ export class AcApDocument {
    */
   async openDocument(
     fileName: string,
-    content: string | ArrayBuffer,
+    content: ArrayBuffer,
     options: AcDbOpenDatabaseOptions
   ) {
     let isSuccess = true
